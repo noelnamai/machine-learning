@@ -1,8 +1,8 @@
-# sebaba: 
+# Sebaba
 
 ## About
 
-Implementation of popular Machine Learning algorithms using Python (NumPy)[https://numpy.org/] library.
+Implementation of popular Machine Learning algorithms using Python [NumPy](https://numpy.org/) library.
 
 ## Table of Contents
 
