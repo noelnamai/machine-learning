@@ -1,4 +1,10 @@
-# sebaba: a bare metal implementation of popular machine learning algorithms using python
+# sebaba: 
+
+## About
+
+Implementation of popular Machine Learning algorithms using Python (NumPy)[https://numpy.org/] library.
+
+## Table of Contents
 
 1. [Perceptron](https://github.com/noelnamai/machine-learning/blob/master/binary-perceptron.ipynb)
    * Binary Perceptron
