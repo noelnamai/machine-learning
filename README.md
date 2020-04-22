@@ -1,4 +1,4 @@
-# sebaba
+# sebaba: a bare metal implementation of popular machine learning algorithms using python
 
 1. [Perceptron](https://github.com/noelnamai/machine-learning/blob/master/binary-perceptron.ipynb)
    * Binary Perceptron

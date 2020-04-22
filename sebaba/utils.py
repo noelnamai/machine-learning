@@ -140,3 +140,18 @@ def root_mean_squared_error(y_prime, y_test):
     rmse = np.sqrt(mean_squared_error(y_prime, y_test))
     
     return rmse
+
+def accuracy(y_prime, y_test):
+    """
+    Parameters
+    --------------------------------------------------
+        y_prime: ndarray of shape (n_samples, 1)
+        y_test : ndarray of shape (n_samples, 1)
+
+    Returns
+    --------------------------------------------------
+        accuracy: The fraction of predictions our model got right
+    """
+    accuracy = np.mean(y_test.flatten() == y_prime.flatten())
+
+    return accuracy
