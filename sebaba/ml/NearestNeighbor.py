@@ -43,13 +43,13 @@ class KNNClassifier(object):
         y_pred = np.zeros(m)
 
         for i in range(m):
-            neighbors = self.get_neighbors(x[i], k)
+            neighbors = self.find_neighbors(x[i], k)
             n_classes = self.y_train[neighbors]
             y_pred[i] = np.bincount(n_classes.flatten()).argmax()
 
         return y_pred
         
-    def get_neighbors(self, x, k = 1):
+    def find_neighbors(self, x, k = 1):
         """
         Parameters
         --------------------------------------------------
@@ -111,7 +111,7 @@ class KNNRegression(KNNClassifier):
         y_pred = np.zeros(m)
 
         for i in range(m):
-            neighbors = self.get_neighbors(x[i], k)
+            neighbors = self.find_neighbors(x[i], k)
             n_classes = self.y_train[neighbors]
             y_pred[i] = np.mean(n_classes)
 
