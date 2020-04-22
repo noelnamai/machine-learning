@@ -2,7 +2,6 @@
 
 import numpy as np
 
-##########################################################################################
 
 class KNNClassifier(object):
     """
@@ -85,7 +84,7 @@ class KNNClassifier(object):
         
         return distance
 
-##########################################################################################
+
 
 class KNNRegression(KNNClassifier):
     """

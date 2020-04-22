@@ -2,7 +2,6 @@
 
 import numpy as np
 
-##########################################################################################
 
 class LinearRegression(object):
     """
@@ -128,7 +127,7 @@ class LinearRegression(object):
 
         return cost, theta
 
-##########################################################################################
+
 
 class RidgeRegression(LinearRegression):
     """
@@ -202,5 +201,3 @@ class RidgeRegression(LinearRegression):
                 break
 
         return cost, theta
-
-##########################################################################################

@@ -2,7 +2,6 @@
 
 import numpy as np
 
-##########################################################################################
 
 class KMeans(object):
     """
@@ -120,7 +119,7 @@ class KMeans(object):
         
         return distance
 
-##########################################################################################
+
 
 class KMedians(KMeans):
     """
@@ -176,5 +175,3 @@ class KMedians(KMeans):
                 min_cost       = curr_cost
                 self.classes   = classes
                 self.centroids = centroids
-
-##########################################################################################

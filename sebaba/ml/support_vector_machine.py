@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 class SVMClassifier(object):
 
     def __init__(self, alpha = 0.01, gamma = 0.01, iterations = 10000):

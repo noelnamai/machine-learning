@@ -2,7 +2,6 @@
 
 import numpy as np
 
-##########################################################################################
 
 class LogisticClassifier(object):
     """
@@ -156,7 +155,7 @@ class LogisticClassifier(object):
 
         return cost, theta
 
-##########################################################################################
+
 
 class RidgeClassifier(LogisticClassifier):
     """
@@ -229,5 +228,3 @@ class RidgeClassifier(LogisticClassifier):
                 break
 
         return cost, theta
-
-##########################################################################################

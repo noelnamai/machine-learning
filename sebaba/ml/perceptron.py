@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 class Perceptron(object):
     """
     Fits a binary classification Linear Perceptron.
