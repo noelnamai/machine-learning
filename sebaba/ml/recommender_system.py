@@ -11,36 +11,40 @@ class CollaborativeFiltering(object):
     --------------------------------------------------
         iterations: int maximum number of iterations to be performed
     """
-    def __init__(self, iterations = 10):
+    def __init__(self, iterations = 100):
         self.iters     = iterations
         self.tolerance = 1.0e-16
 
-    def cost_function(self, y, y_prime, theta, is_rated):
-        cost =  (1 / 2) * np.sum(((y_prime - y) ** 2) * is_rated)
-
-        return cost
-
-    def gradient_descent(self, y, is_rated):
+    def fit(self, y, is_rated):
         m = y.shape[0]
         n = y.shape[1]
 
-        cost       = list()
-        x          = np.zeros((m, 100))
-        theta      = np.zeros((n, 100))
-        prev_cost  = np.inf
+        theta  = np.ones((n, 100))
+        x      = np.zeros((m, 100))        
+        y_norm = self.normalize_ratings(y, is_rated)
+
+        self.gradient_descent(x, y_norm, theta, is_rated)
+
+    def cost_function(self, y, y_prime, is_rated):
+        cost = (1 / 2) * np.sum(((y_prime - y) ** 2) * is_rated)
+
+        return cost
+
+    def gradient_descent(self, x, y, theta, is_rated):
+        self.cost = list()
+
+        prev_cost = np.inf
 
         for _ in range(int(self.iters)):
             #np.dot(x, theta) = sum(theta.T * x)
             y_prime   = np.dot(x, theta.T)
             x         = x - np.dot(((y_prime - y) * is_rated), theta)
             theta     = theta - np.dot(((y_prime - y) * is_rated).T, x)
-            curr_cost = self.cost_function(y, y_prime, theta, is_rated)
-            cost.append(curr_cost)
+            curr_cost = self.cost_function(y, y_prime, is_rated)
+            self.cost.append(curr_cost)
 
-        self.x_grad     = x
-        self.theta_grad = theta
-
-        return cost
+        self.x     = x
+        self.theta = theta
 
     def normalize_ratings(self, y, is_rated):
         m = y.shape[0]
@@ -54,4 +58,4 @@ class CollaborativeFiltering(object):
             y_mean[i]      = np.mean(y[i, idx])
             y_norm[i, idx] = y[i, idx] - y_mean[i]
 
-        return y_norm, y_mean
+        return y_norm
