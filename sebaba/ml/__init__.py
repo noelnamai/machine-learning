@@ -11,3 +11,4 @@ from .logistic_regression import LogisticClassifier
 from .logistic_regression import RidgeClassifier
 from .support_vector_machine import SVMClassifier
 from .dimension_reduction import PCA
+from .recommender_system import CollaborativeFiltering
