@@ -26,7 +26,7 @@ class CollaborativeFiltering(object):
         n_movies = y.shape[0]
         n_users  = y.shape[1]
 
-        x     = np.random.random(size = (n_movies, self.n_features))  
+        x     = np.random.random(size = (n_movies, self.n_features))
         theta = np.random.random(size = (n_users, self.n_features))  
 
         params = np.concatenate((x.flatten(), theta.flatten()))        
