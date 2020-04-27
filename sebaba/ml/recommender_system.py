@@ -14,6 +14,7 @@ class CollaborativeFiltering(object):
         alpha     : float the learning rate
         gamma     : float the regularization parameter
         iterations: int maximum number of iterations to be performed
+        n_features: int the number of features to learn
     """
     def __init__(self, alpha = 0.01, gamma = 0.01, n_features = 10, iterations = 100):
         self.alpha      = alpha
@@ -26,8 +27,8 @@ class CollaborativeFiltering(object):
         n_movies = y.shape[0]
         n_users  = y.shape[1]
 
-        x     = np.random.random(size = (n_movies, self.n_features))
-        theta = np.random.random(size = (n_users, self.n_features))  
+        x     = np.random.random((n_movies, self.n_features))
+        theta = np.random.random((n_users, self.n_features))
 
         params = np.concatenate((x.flatten(), theta.flatten()))        
         y_norm = self.normalize_ratings(y, is_rated)
@@ -41,6 +42,9 @@ class CollaborativeFiltering(object):
             tol = self.tolerance,
             options = {"maxiter": self.iters}
         )
+
+        self.x     = np.reshape(opt_result.x[:n_movies * self.n_features], (n_movies, self.n_features))
+        self.theta = np.reshape(opt_result.x[n_movies * self.n_features:], (n_users, self.n_features))
 
         return opt_result
 

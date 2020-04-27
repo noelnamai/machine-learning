@@ -24,3 +24,5 @@ Implementation of popular Machine Learning algorithms using Python's [NumPy](htt
    * K-Medians Clustering 
 6. [Dimension Reduction](https://github.com/noelnamai/machine-learning/blob/master/pca.ipynb)
    * Principal Component Analysis
+7. [Collaborative Filtering](https://github.com/noelnamai/machine-learning/blob/master/recommender-systems.ipynb)
+   * Recommender Systems
