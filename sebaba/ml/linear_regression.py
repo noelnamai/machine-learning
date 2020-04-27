@@ -5,7 +5,7 @@ import numpy as np
 
 class LinearRegression(object):
     """
-    Performs Linear Regression using Ordinary Least Squares.
+    Performs Linear Regression using Ordinary Least Squares
 
     Parameters
     --------------------------------------------------
@@ -23,7 +23,7 @@ class LinearRegression(object):
         """
         Parameters
         --------------------------------------------------
-            x: ndarray of shape (n_samples}, n_features)
+            x: ndarray of shape (n_samples, n_features)
             y: ndarray of shape (n_samples, 1)
 
         Returns
@@ -32,16 +32,20 @@ class LinearRegression(object):
             theta: ndarray of shape (1 + n_features, 1)
         """
         if (isinstance(x, np.ndarray) == False):
-            raise Exception(f"x should be an ndarray of shape (n_samples, n_features).")
+            raise Exception(f"x should be an ndarray of shape (n_samples, n_features)")
         if (isinstance(y, np.ndarray) == False):
-            raise Exception(f"y should be an ndarray of shape (n_samples, 1).")
+            raise Exception(f"y should be an ndarray of shape (n_samples, 1)")
         if ((x.shape[0] == y.shape[0]) == False):
-            raise Exception( f"both x: {x.shape} and y: {y.shape} should be of length n_samples.")
+            raise Exception( f"both x: {x.shape} and y: {y.shape} should be of length n_samples")
         
         self.mu    = np.mean(x, axis = 0)
         self.sigma = np.std(x, axis = 0)
-        x_scaled   = self.scale_and_normalize(x)
-        self.cost, self.theta = self.gradient_descent(x_scaled, y)
+
+        x_scaled    = self.scale_and_normalize(x)
+        cost, theta = self.gradient_descent(x_scaled, y)
+
+        self.cost  = cost
+        self.theta = theta
 
     def predict(self, x_prime):
         """
@@ -131,7 +135,7 @@ class LinearRegression(object):
 
 class RidgeRegression(LinearRegression):
     """
-    Performs Linear Regression using Ordinary Least Squares with (L2) Ridge Regularization.
+    Performs Linear Regression using Ordinary Least Squares with (L2) Ridge Regularization
 
     Parameters
     --------------------------------------------------
