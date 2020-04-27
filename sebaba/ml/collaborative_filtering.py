@@ -17,7 +17,7 @@ class CollaborativeFiltering(object):
         iterations: int maximum number of iterations to be performed
         n_features: int the number of parameter or features to learn
     """
-    def __init__(self, alpha = 0.01, gamma = 0.01, n_features = 10, iterations = 100):
+    def __init__(self, alpha = 0.01, gamma = 0.01, n_features = 10, iterations = 1000):
         self.alpha      = alpha
         self.gamma      = gamma
         self.iters      = iterations

@@ -27,7 +27,7 @@ class Perceptron(object):
 
         Returns
         --------------------------------------------------
-            b: ndarray of shape (1, 0)
+            b: ndarray of shape (1, )
             w: ndarray of shape (n_features, 1)
         """
         if (isinstance(x, np.ndarray) == False):
@@ -71,7 +71,7 @@ class Perceptron(object):
         Parameters
         --------------------------------------------------
             x: ndarray of shape (n_samples, n_features)
-            b: ndarray of shape (1, 0)
+            b: ndarray of shape (1, )
             w: ndarray of shape (n_features, 1)
 
         Returns
@@ -91,7 +91,7 @@ class Perceptron(object):
 
         Returns
         --------------------------------------------------
-            b: ndarray of shape (1, 0)
+            b: ndarray of shape (1, )
             w: ndarray of shape (n_features, 1)
         """
         m = x.shape[0]

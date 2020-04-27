@@ -35,3 +35,19 @@ class SVMClassifier(object):
         y_pred = np.sign(np.dot(x, self.w) + self.b)
 
         return y_pred
+
+    def linear_kernel(self, x, y):
+        x = x.flatten()
+        y = y.flatten()
+
+        sim = np.dot(x, y.T)
+
+        return sim
+
+    def gaussian_kernel(self, x, y):
+        x = x.flatten()
+        y = y.flatten()
+
+        sim = np.exp(- (np.sum((x - y) ** 2) / (2 * (self.gamma ** 2))))
+
+        return sim
