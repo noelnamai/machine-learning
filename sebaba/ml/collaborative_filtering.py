@@ -40,8 +40,9 @@ class CollaborativeFiltering(object):
         n_items = y.shape[0]
         n_users = y.shape[1]
 
-        x      = np.random.random((n_items, self.n_features))
-        theta  = np.random.random((n_users, self.n_features))
+        x     = np.random.random((n_items, self.n_features))
+        theta = np.random.random((n_users, self.n_features))
+
         params = np.concatenate((x.flatten(), theta.flatten()))        
 
         opt_result = minimize(
