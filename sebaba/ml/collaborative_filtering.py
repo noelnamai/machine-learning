@@ -33,9 +33,9 @@ class CollaborativeFiltering(object):
 
         Returns
         --------------------------------------------------
-            x         : ndarray of shape (n_items, n_features)
-            theta     : ndarray of shape (n_users, n_features)
-            opt_result: OptimizeResult the optimization result object
+            x     : ndarray of shape (n_items, n_features)
+            theta : ndarray of shape (n_users, n_features)
+            result: OptimizeResult the optimization result object
         """
         n_items = y.shape[0]
         n_users = y.shape[1]
@@ -45,7 +45,7 @@ class CollaborativeFiltering(object):
 
         params = np.concatenate((x.flatten(), theta.flatten()))        
 
-        opt_result = minimize(
+        result = minimize(
             fun = self.gradient, 
             x0 = params,
             args = (y, is_rated),
@@ -55,10 +55,10 @@ class CollaborativeFiltering(object):
             options = {"maxiter": self.iters}
         )
 
-        self.x     = np.reshape(opt_result.x[ :n_items * self.n_features], (n_items, self.n_features))
-        self.theta = np.reshape(opt_result.x[n_items * self.n_features: ], (n_users, self.n_features))
+        self.x     = np.reshape(result.x[ :n_items * self.n_features], (n_items, self.n_features))
+        self.theta = np.reshape(result.x[n_items * self.n_features: ], (n_users, self.n_features))
 
-        return opt_result
+        return result
 
     def gradient(self, params, y, is_rated):
         """
