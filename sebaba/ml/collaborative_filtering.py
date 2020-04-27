@@ -64,7 +64,7 @@ class CollaborativeFiltering(object):
         """
         Parameters
         --------------------------------------------------
-            params  :
+            params  : ndarray of shape (n_features * (n_items + n_users), )
             y       : ndarray of shape (n_items, n_users)
             is_rated: ndarray of shape (n_items, n_users)
 
