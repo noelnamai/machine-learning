@@ -19,17 +19,15 @@ class SVMClassifier(object):
         self.b = 0
         self.w = np.zeros(n)
 
-        for i in np.unique(y):
-            y_ = np.where(y == i, 1, -1)
-            for _ in range(self.iterations):
-                for i in range(m):
-                    condition = y_[i] * (np.dot(x[i], self.w) + self.b)
-                    
-                    if condition >= 1:
-                        self.w = self.w - self.alpha * (2 * self.gamma * self.w)
-                    else:
-                        self.w = self.w - self.alpha * (2 * self.gamma * self.w + np.dot(x[i], y_[i]))
-                        self.b = self.b - self.alpha * y_[i]
+        for _ in range(self.iterations):
+            for i in range(m):
+                condition = y * (np.dot(x, self.w) + self.b)
+                
+                if condition >= 1:
+                    self.w = self.w - self.alpha * (2 * self.gamma * self.w)
+                else:
+                    self.w = self.w - self.alpha * (2 * self.gamma * self.w + np.dot(x, y))
+                    self.b = self.b - self.alpha * y
 
     def predict(self, x):
         y_pred = np.sign(np.dot(x, self.w) + self.b)

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import numpy as np
-
 from scipy.optimize import minimize
 
 
@@ -22,6 +21,7 @@ class CollaborativeFiltering(object):
         self.gamma      = gamma
         self.iters      = iterations
         self.n_features = n_features
+        self.cost       = list()
         self.tolerance  = 1.0e-16
 
     def fit(self, y, is_rated):
@@ -85,6 +85,8 @@ class CollaborativeFiltering(object):
         cost = (1 / 2) * np.sum(((y_prime - y) * is_rated) ** 2)
         cost = cost + ((self.gamma / 2) * np.sum(x ** 2))
         cost = cost + ((self.gamma / 2) * np.sum(theta ** 2))
+
+        self.cost.append(cost)
 
         x_grad     = self.alpha * ((np.dot(((y_prime - y) * is_rated), theta)) + self.gamma * x)
         theta_grad = self.alpha * ((np.dot(((y_prime - y) * is_rated).T, x)) + self.gamma * theta)

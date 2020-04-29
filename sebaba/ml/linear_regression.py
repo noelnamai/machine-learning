@@ -13,7 +13,7 @@ class LinearRegression(object):
         normalize : bool
         iterations: int maximum number of iterations to be performed
     """
-    def __init__(self, alpha = 0.01, iterations = 100000, normalize = True):
+    def __init__(self, alpha = 0.01, iterations = 1000, normalize = True):
         self.alpha      = alpha
         self.normalize  = normalize
         self.iterations = iterations
