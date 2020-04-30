@@ -22,7 +22,7 @@ class CollaborativeFiltering(object):
         self.iters      = iterations
         self.n_features = n_features
         self.cost       = list()
-        self.tolerance  = 1.0e-16
+        self.tolerance  = 1.0e-06
 
     def fit(self, y, is_rated):
         """
