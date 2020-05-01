@@ -25,7 +25,7 @@ class LogisticClassifier(object):
         """
         Parameters
         --------------------------------------------------
-            x: ndarray of shape (n_samples}, n_features)
+            x: ndarray of shape (n_samples, n_features)
             y: ndarray of shape (n_samples, 1)
 
         Returns
