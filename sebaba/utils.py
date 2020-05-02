@@ -212,11 +212,13 @@ def change_vars_to_categorical(df = None, vars_to_change = []):
     """
     Function that changes all non-numeric variables to categorical datatype.
     
-    Arguments:
+    Parameters:
+    --------------------------------------------------
         df            : DataFrame
         vars_to_change: list, the variables in the list are converted to categorical datatype.
     
     Returns:
+    --------------------------------------------------
         df: DataFrame with categorical datatypes converted
     """
     cat_vars = df.select_dtypes(exclude = "number").columns.to_list()
@@ -228,3 +230,24 @@ def change_vars_to_categorical(df = None, vars_to_change = []):
         df[var] = df[var].astype("category")
         
     return df
+
+def split_numerical_categorical(df = None):
+    """
+    Function that creates a list for numerical and categorical variables respectively
+
+    Parameters:
+    --------------------------------------------------
+        df: DataFrame
+
+    Returns:
+    --------------------------------------------------
+        num_df: Dataframe of numerical variables only
+        cat_df: Dataframe of categorical variables only
+    """
+    num_vars = df.select_dtypes(include = "number").columns.to_list()
+    cat_vars = df.select_dtypes(exclude = "number").columns.to_list()
+
+    num_df = df[num_vars]
+    cat_df = df[cat_vars]
+    
+    return num_df, cat_df
