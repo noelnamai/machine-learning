@@ -17,6 +17,8 @@ params = {
 
 def map_polynomial_features(x, degree = 2):
     """
+    Function to map variables into an n degree polynomial features
+
     Parameters
     --------------------------------------------------
         x     : ndarray of shape (n_samples, n_features)
@@ -42,6 +44,8 @@ def map_polynomial_features(x, degree = 2):
 
 def split_train_test(x, y, prop_train = 80, validation = False, seed = None):
     """
+    Function to split the a dataset into training set with probability p and testing sets
+
     Parameters
     --------------------------------------------------
         x          : ndarray of shape (n_samples, n_features)
@@ -85,6 +89,8 @@ def split_train_test(x, y, prop_train = 80, validation = False, seed = None):
 
 def plot_cost_function(cost = None, width = 10.0, height = 6.5):
     """
+    Function to plot the cost function from an optimization algorithm e.g. gradient descent
+
     Parameters
     --------------------------------------------------
         cost  : ndarray of shape (iterations, 1)
@@ -111,6 +117,8 @@ def plot_cost_function(cost = None, width = 10.0, height = 6.5):
 
 def mean_squared_error(y_prime, y_test):
     """
+    Function to calculate the The Mean Squared Error (MSE)
+
     Parameters
     --------------------------------------------------
         y_prime: ndarray of shape (n_samples, 1)
@@ -128,6 +136,8 @@ def mean_squared_error(y_prime, y_test):
 
 def root_mean_squared_error(y_prime, y_test):
     """
+    Function to calculate the The Root Mean Squared Error (RMSE)
+
     Parameters
     --------------------------------------------------
         y_prime: ndarray of shape (n_samples, 1)
@@ -143,6 +153,8 @@ def root_mean_squared_error(y_prime, y_test):
 
 def accuracy(y_prime, y_test):
     """
+    Function to calculate the accuracy of a model
+    
     Parameters
     --------------------------------------------------
         y_prime: ndarray of shape (n_samples, 1)
@@ -150,8 +162,69 @@ def accuracy(y_prime, y_test):
 
     Returns
     --------------------------------------------------
-        accuracy: The fraction of predictions our model got right
+        accuracy: The fraction of predictions the model got right
     """
     accuracy = np.mean(y_test.flatten() == y_prime.flatten())
 
     return accuracy
+
+def missing_var_pct(df = None):
+    """
+    Function that return variables that have missing values and the percentage 
+    of total observations that are missing
+    
+    Parameters:
+    --------------------------------------------------
+        df: DataFrame
+    
+    Returns:
+    --------------------------------------------------
+        missing : Pandas Series with variables and their respective missing percentages
+    """
+    pct_missing  = df.isnull().mean().sort_values(ascending = False) * 100
+    pct_missing  = pct_missing.loc[pct_missing > 0].round(2)
+    
+    if len(pct_missing) > 0:
+        print(f"{pct_missing}")
+    else:
+        print("The dataframe has no missing values in any column.")
+
+def drop_missing_var(df = None, threshold = 0.8):
+    """
+    Function that removes variables that have missing percentages above a threshold.
+    
+    Parameters:
+    --------------------------------------------------
+        df       : DataFrame
+        threshold: float, the threshold for missing percentage value in decimals
+
+    Returns:
+    --------------------------------------------------
+        df: Pandas DataFrame with variables removed
+    """
+
+    remove = df.columns[df.isnull().mean() > threshold].to_list()
+    df     = df.drop(remove, axis = 1)
+
+    return df
+
+def change_vars_to_categorical(df = None, vars_to_change = []):
+    """
+    Function that changes all non-numeric variables to categorical datatype.
+    
+    Arguments:
+        df            : DataFrame
+        vars_to_change: list, the variables in the list are converted to categorical datatype.
+    
+    Returns:
+        df: DataFrame with categorical datatypes converted
+    """
+    cat_vars = df.select_dtypes(exclude = "number").columns.to_list()
+    
+    if len(vars_to_change) > 0:
+        cat_vars = vars_to_change
+    
+    for var in cat_vars:
+        df[var] = df[var].astype("category")
+        
+    return df
