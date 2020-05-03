@@ -89,14 +89,14 @@ class LinearRegression(object):
 
         Returns
         --------------------------------------------------
-            j_theta: ndarray of shape (1 + n_features, 1)
+            cost: ndarray of shape (1 + n_features, 1)
         """
         m = y.shape[0]
         n = y.shape[1]
 
-        j_theta = (1 / (2 * m)) * np.sum(np.square(y_prime - y))
+        cost = (1 / (2 * m)) * np.sum(np.square(y_prime - y))
 
-        return j_theta
+        return cost
 
     def gradient_descent(self, x, y):
         """
@@ -113,9 +113,9 @@ class LinearRegression(object):
         m = x.shape[0]
         n = x.shape[1]
 
-        cost      = list()
-        theta     = np.ones((n, 1))
-        prev_cost = np.inf
+        cost     = list()
+        theta    = np.random.randn(n, 1)
+        min_cost = np.inf
         
         for _ in range(int(self.iterations)):
             #np.dot(x, theta) = sum(theta.T * x)
@@ -124,13 +124,12 @@ class LinearRegression(object):
             curr_cost = self.cost_function(y, y_prime, theta)
             cost.append(curr_cost)
 
-            if (abs(prev_cost - curr_cost) > self.tolerance):
-                prev_cost = curr_cost
+            if (abs(min_cost - curr_cost) > self.tolerance):
+                min_cost = curr_cost
             else:
                 break
 
         return cost, theta
-
 
 
 class RidgeRegression(LinearRegression):
@@ -164,14 +163,14 @@ class RidgeRegression(LinearRegression):
 
         Returns
         --------------------------------------------------
-            j_theta: ndarray of shape (1 + n_features, 1)
+            cost: ndarray of shape (1 + n_features, 1)
         """
         m = y.shape[0]
         n = y.shape[1]
 
-        j_theta = (1 / (2 * m)) * (np.sum(np.square(y_prime - y)) + self.gamma * np.sum(theta ** 2))
+        cost = (1 / (2 * m)) * (np.sum(np.square(y_prime - y)) + self.gamma * np.sum(theta ** 2))
 
-        return j_theta
+        return cost
 
     def gradient_descent(self, x, y):
         """
@@ -188,9 +187,9 @@ class RidgeRegression(LinearRegression):
         m = x.shape[0]
         n = x.shape[1]
 
-        cost      = list()
-        theta     = np.ones((n, 1))
-        prev_cost = np.inf
+        cost     = list()
+        theta    = np.random.randn(n, 1)
+        min_cost = np.inf
         
         for _ in range(int(self.iterations)):
             #np.dot(x, theta) = sum(theta.T * x)
@@ -199,8 +198,8 @@ class RidgeRegression(LinearRegression):
             curr_cost = self.cost_function(y, y_prime, theta)
             cost.append(curr_cost)
 
-            if (abs(prev_cost - curr_cost) > self.tolerance):
-                prev_cost = curr_cost
+            if (abs(min_cost - curr_cost) > self.tolerance):
+                min_cost = curr_cost
             else:
                 break
 
