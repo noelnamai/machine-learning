@@ -114,7 +114,7 @@ class LinearRegression(object):
         n = x.shape[1]
 
         cost     = list()
-        theta    = np.random.randn(n, 1)
+        theta    = np.ones((n, 1))
         min_cost = np.inf
         
         for _ in range(int(self.iterations)):
@@ -188,7 +188,7 @@ class RidgeRegression(LinearRegression):
         n = x.shape[1]
 
         cost     = list()
-        theta    = np.random.randn(n, 1)
+        theta    = np.ones((n, 1))
         min_cost = np.inf
         
         for _ in range(int(self.iterations)):
