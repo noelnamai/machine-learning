@@ -7,13 +7,14 @@ class LinearRegression(object):
     """
     Performs Linear Regression using Ordinary Least Squares
 
-    Parameters
+    Attributes
     --------------------------------------------------
         alpha     : float the learning rate
         normalize : bool
         iterations: int maximum number of iterations to be performed
+        tolerance : float
     """
-    def __init__(self, alpha = 0.01, iterations = 1000, normalize = True):
+    def __init__(self, alpha = 0.01, iterations = 10000, normalize = True):
         self.alpha      = alpha
         self.normalize  = normalize
         self.iterations = iterations
@@ -42,7 +43,7 @@ class LinearRegression(object):
         self.sigma = np.std(x, axis = 0)
 
         x_scaled    = self.scale_and_normalize(x)
-        cost, theta = self.gradient_descent(x_scaled, y)
+        cost, theta = self.compute_gradient(x_scaled, y)
 
         self.cost  = cost
         self.theta = theta
@@ -79,7 +80,7 @@ class LinearRegression(object):
 
         return x
 
-    def cost_function(self, y, y_prime, theta):
+    def compute_cost(self, y, y_prime, theta):
         """
         Parameters
         --------------------------------------------------
@@ -98,7 +99,7 @@ class LinearRegression(object):
 
         return cost
 
-    def gradient_descent(self, x, y):
+    def compute_gradient(self, x, y):
         """
         Parameters
         --------------------------------------------------
@@ -121,7 +122,7 @@ class LinearRegression(object):
             #np.dot(x, theta) = sum(theta.T * x)
             y_prime   = np.dot(x, theta)
             theta     = theta - (self.alpha * (1 / m) * np.dot(x.T, (y_prime - y)))
-            curr_cost = self.cost_function(y, y_prime, theta)
+            curr_cost = self.compute_cost(y, y_prime, theta)
             cost.append(curr_cost)
 
             if (abs(min_cost - curr_cost) > self.tolerance):
@@ -136,14 +137,15 @@ class RidgeRegression(LinearRegression):
     """
     Performs Linear Regression using Ordinary Least Squares with (L2) Ridge Regularization
 
-    Parameters
+    Attributes
     --------------------------------------------------
         alpha     : float the learning rate
         gamma     : float the regularization parameter
         normalize : bool
         iterations: int maximum number of iterations to be performed
+        tolerance : float
     """
-    def __init__(self, alpha = 0.01, gamma = 0.01, iterations = 100000, normalize = True):
+    def __init__(self, alpha = 0.01, gamma = 0.01, iterations = 10000, normalize = True):
         self.gamma = gamma
            
         LinearRegression.__init__(
@@ -153,7 +155,7 @@ class RidgeRegression(LinearRegression):
             normalize = normalize
         )
 
-    def cost_function(self, y, y_prime, theta):
+    def compute_cost(self, y, y_prime, theta):
         """
         Parameters
         --------------------------------------------------
@@ -172,7 +174,7 @@ class RidgeRegression(LinearRegression):
 
         return cost
 
-    def gradient_descent(self, x, y):
+    def compute_gradient(self, x, y):
         """
         Parameters
         --------------------------------------------------
@@ -195,7 +197,7 @@ class RidgeRegression(LinearRegression):
             #np.dot(x, theta) = sum(theta.T * x)
             y_prime   = np.dot(x, theta)
             theta     = theta * (1 - self.alpha * (self.gamma / m)) - (self.alpha * (1 / m) * np.dot(x.T, (y_prime - y)))
-            curr_cost = self.cost_function(y, y_prime, theta)
+            curr_cost = self.compute_cost(y, y_prime, theta)
             cost.append(curr_cost)
 
             if (abs(min_cost - curr_cost) > self.tolerance):

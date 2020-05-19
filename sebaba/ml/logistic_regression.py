@@ -12,6 +12,7 @@ class LogisticClassifier(object):
         alpha     : float the learning rate
         normalize : bool
         iterations: int maximum number of iterations to be performed
+        tolerance : float
     """
     def __init__(self, alpha = 0.01, iterations = 100000, normalize = True):
         self.theta      = dict()
@@ -47,7 +48,7 @@ class LogisticClassifier(object):
 
         for i in np.unique(y):
             y_one_vs_all  = np.where(y == i, 1, 0)
-            cost, theta   = self.gradient_descent(x_scaled, y_one_vs_all)
+            cost, theta   = self.compute_gradient(x_scaled, y_one_vs_all)
             self.cost[i]  = cost
             self.theta[i] = theta
 
@@ -104,7 +105,7 @@ class LogisticClassifier(object):
         
         return probs
 
-    def cost_function(self, y, y_prime, theta):
+    def compute_cost(self, y, y_prime, theta):
         """
         Parameters
         --------------------------------------------------
@@ -122,7 +123,7 @@ class LogisticClassifier(object):
         
         return j_theta
 
-    def gradient_descent(self, x, y):
+    def compute_gradient(self, x, y):
         """
         Parameters
         --------------------------------------------------
@@ -145,7 +146,7 @@ class LogisticClassifier(object):
             #np.dot(x, theta) = sum(theta.T * x)
             y_prime   = self.sigmoid(np.dot(x, theta))
             theta     = theta - (self.alpha * (1 / m) * np.dot(x.T, (y_prime - y)))
-            curr_cost = self.cost_function(y, y_prime, theta)
+            curr_cost = self.compute_cost(y, y_prime, theta)
             cost.append(curr_cost)
 
             if (abs(prev_cost - curr_cost) > self.tolerance):
@@ -154,7 +155,6 @@ class LogisticClassifier(object):
                 break
 
         return cost, theta
-
 
 
 class RidgeClassifier(LogisticClassifier):
@@ -178,7 +178,7 @@ class RidgeClassifier(LogisticClassifier):
             normalize = normalize
         )
 
-    def cost_function(self, y, y_prime, theta):
+    def compute_cost(self, y, y_prime, theta):
         """
         Parameters
         --------------------------------------------------
@@ -196,7 +196,7 @@ class RidgeClassifier(LogisticClassifier):
         
         return j_theta
 
-    def gradient_descent(self, x, y):
+    def compute_gradient(self, x, y):
         """
         Parameters
         --------------------------------------------------
@@ -219,7 +219,7 @@ class RidgeClassifier(LogisticClassifier):
             #np.dot(x, theta) = sum(theta.T * x)
             y_prime   = self.sigmoid(np.dot(x, theta))
             theta     = theta * (1 - self.alpha * (self.gamma / m)) - (self.alpha * (1 / m) * np.dot(x.T, (y_prime - y)))
-            curr_cost = self.cost_function(y, y_prime, theta)
+            curr_cost = self.compute_cost(y, y_prime, theta)
             cost.append(curr_cost)
             
             if (abs(prev_cost - curr_cost) > self.tolerance):

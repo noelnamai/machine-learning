@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
-import sys
-import random
-import numpy as np
 import itertools as it
+import random
+import sys
+
 import matplotlib.pyplot as plt
 import matplotlib.ticker as tkr
+import numpy as np
+import seaborn as sns
 
 params = {
     "axes.labelsize"  : 16,
@@ -103,7 +105,7 @@ def plot_cost_function(cost = None, width = 10.0, height = 6.5):
     """
     plt.rcParams.update(params)
     fig, ax = plt.subplots(figsize = (width, height))
-    ax.plot(range(len(cost)), cost, scalex = True, scaley = True)
+    ax = sns.lineplot(x = range(len(cost)), y = cost, scalex = True, scaley = True)
     ax.axhline(y = min(cost), color = "r", linewidth = 0.5, linestyle = "--")
     ax.set_ylabel("Cost $J(\\theta)$")
     ax.set_xlabel("Number of Iterations $(t)$")

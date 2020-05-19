@@ -2,7 +2,6 @@
 
 import numpy as np
 
-
 class KMeans(object):
     """
     Performs the K-Means Clustering algorithm i.e. Lloyd's algorithm a.k.a. Voronoi iteration or relaxation
@@ -53,7 +52,7 @@ class KMeans(object):
             for i in range(self.k):
                 centroids[i] = np.mean(x[classes == i], axis = 0)
 
-            curr_cost = self.calculate_cost(x, classes, centroids)
+            curr_cost = self.compute_cost(x, classes, centroids)
             self.cost.append(curr_cost)
 
             if curr_cost < min_cost:
@@ -69,19 +68,19 @@ class KMeans(object):
 
         Returns
         --------------------------------------------------
-            classes: ndarray of shape (n_samples, 1)
+            y_pred: ndarray of shape (n_samples, 1)
         """
-        m         = x.shape[0]
-        distances = np.zeros([m, self.k])
+        m    = x.shape[0]
+        dist = np.zeros([m, self.k])
         
         for i in range(self.k):
-            distances[:,i] = self.euclidean_distance(self.centroids[i], x)
+            dist[:,i] = self.euclidean_distance(self.centroids[i], x)
         
-        classes = np.argmin(distances, axis = 1)
+        y_pred = np.argmin(dist, axis = 1)
 
-        return classes
+        return y_pred
 
-    def calculate_cost(self, x, classes, centroids):
+    def compute_cost(self, x, classes, centroids):
         """
         Parameters
         --------------------------------------------------
@@ -93,15 +92,13 @@ class KMeans(object):
         --------------------------------------------------
             cost: ndarray of shape (iterations, 1)
         """
-        cltr_cost = np.zeros(self.k)
+        cost = np.array([])
 
         for i in range(self.k):
-            cltr_dist = self.euclidean_distance(centroids[i], x[classes == i])
-            cltr_cost = np.append(cltr_cost, cltr_dist)
+            dist = self.euclidean_distance(centroids[i], x[classes == i])
+            cost = np.append(cost, dist)
 
-        cost = np.mean(cltr_cost)
-
-        return cost
+        return np.mean(cost)
 
     def euclidean_distance(self, centroid, x):
         """
@@ -112,13 +109,12 @@ class KMeans(object):
 
         Returns
         --------------------------------------------------
-            distance: ndarray of shape (n_samples, k)
+            dist: ndarray of shape (n_samples, k)
         """
         #np.sqrt(np.sum((x[i] - centroid)**2))
-        distance = np.linalg.norm(x - centroid, axis = 1)
+        dist = np.linalg.norm(x - centroid, axis = 1)
         
-        return distance
-
+        return dist
 
 
 class KMedians(KMeans):
@@ -168,7 +164,7 @@ class KMedians(KMeans):
             for i in range(self.k):
                 centroids[i] = np.median(x[classes == i], axis = 0)
 
-            curr_cost = self.calculate_cost(x, classes, centroids)
+            curr_cost = self.compute_cost(x, classes, centroids)
             self.cost.append(curr_cost)
 
             if curr_cost < min_cost:

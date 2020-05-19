@@ -13,8 +13,6 @@ class Perceptron(object):
         iterations: int maximum number of iterations to be performed
     """
     def __init__(self, alpha = 0.01, iterations = 10000):
-        self.b     = dict()
-        self.w     = dict()
         self.alpha = alpha
         self.iters = iterations
         
@@ -37,9 +35,12 @@ class Perceptron(object):
         if ((x.shape[0] == y.shape[0]) == False):
             raise Exception( f"both x: {x.shape} and y: {y.shape} should be of length n_samples.")
 
+        self.b = dict()
+        self.w = dict()
+
         for i in np.unique(y):
             y_vs_all  = np.where(y == i, 1, 0)
-            w, b      = self.gradient_descent(x, y_vs_all)
+            w, b      = self.compute_gradient(x, y_vs_all)
             self.b[i] = b
             self.w[i] = w
 
@@ -82,7 +83,7 @@ class Perceptron(object):
 
         return np.where(y >= 0, 1, 0)
 
-    def gradient_descent(self, x, y):
+    def compute_gradient(self, x, y):
         """
         Parameters
         --------------------------------------------------
